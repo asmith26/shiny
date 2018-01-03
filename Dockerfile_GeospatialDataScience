@@ -1,0 +1,87 @@
+FROM rocker/shiny:latest
+# docker build -f Dockerfile_GeospatialDataScience -t rocker/geospatial-data-science .
+# docker run -d -p 80:3838 -v /PATH/TO/LOCAL/ALL SHINYAPPS/:/srv/shiny-server/ -v /srv/shinylog/:/var/log/shiny-server/ rocker/geospatial-data-science
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends -t unstable \
+  gdal-bin \
+  libgdal-dev \
+  libssl-dev \
+  libudunits2-dev \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/
+  
+# section 1: ADMIN
+# section 2: DATA READING
+# section 3: DATA WRANGLING
+# section 4: GIS
+# section 5: STATS/MODELLING
+# section 6: VISUALISATION
+  
+# couldn't install (error typically R version): readxml, parallel, purr, vctrs, carat
+
+RUN install2.r --error \
+  doParallel \
+  devtools \
+  knitr \
+  
+  feather \
+  haven \
+  httr \
+  jsonlite \
+  readr \
+  RPostgreSQL \
+  rvest \
+  
+  tidyverse \
+  data.table \
+  dplyr \
+  forcats \
+  hms \
+  lubridate \
+  magrittr \
+  plyr \
+  sjmisc \
+  stringr \
+  tibble \
+  tidyr \
+  xml2 \
+  
+  geosphere \
+  ggmap \
+  GISTools \
+  PBSmapping \
+  rangeMapper \
+  raster \
+  rgdal \
+  rgeos \
+  maptools \
+  RgoogleMaps \
+  sf \
+  sp \
+  StreamMetabolism \
+  TideHarmonics \
+  
+  benford.analysis \
+  broom \
+  cluster \
+  dbscan \
+  Hmisc \
+  modelr \
+  Rtsne \
+  xts \
+  
+  DT \
+  htmltools \
+  ggplot2 \
+  plotly \
+  lattice \
+  leaflet \
+  rmarkdown \
+  shiny \
+  shinyBS \
+  shinyjs \
+  
+	&& rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+  
+CMD ["/usr/bin/shiny-server.sh"]
